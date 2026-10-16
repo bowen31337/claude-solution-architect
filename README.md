@@ -90,6 +90,51 @@ Assertions check substance, for example:
 
 They also check answer quality: proportionate length, no invented statistics. See `evals/evals.json`.
 
+### Results
+
+These results are from October 2026, using Claude Opus 5.5 in Claude Code.
+
+**Output quality.** The suite has 9 test prompts and 94 assertions. Each prompt runs once with the skill and once without:
+
+| | With skill | Without skill |
+|---|---|---|
+| Assertions passed | **99%** | 93% |
+| Mean time per answer | 77 s | 50 s |
+| Mean tokens per answer | ~67k | ~40k |
+
+The plain model is already a strong baseline, so the gains are in rigor rather than coverage. With the skill, answers more consistently:
+- fix acceptance thresholds and rollback criteria before any change
+- name the deciding tradeoff behind each recommendation
+- route vague values (such as "around £5k") to an exception path
+- check the results that trigger irreversible actions, not only the flagged ones
+- leave sound components alone instead of over-flagging them
+- keep short reviews short
+
+The cost is about 1.7× the tokens and roughly 27 s of extra time per answer. Full design documents also run longer than the baseline's.
+
+**Triggering.** Each of these prompts ran in a fresh `claude -p` session from an empty directory, with the skill installed at user level:
+
+| Prompt | Should trigger | Triggered |
+|---|---|---|
+| Regional bank: branch-staff policy assistant plus live account status, on AWS | yes | ✅ yes |
+| Critique: an agent with production-DB read/write, open to anyone via Slack | yes | ✅ yes |
+| Decision: first step before swapping a classifier from Sonnet to Haiku (A–D) | yes | ✅ yes |
+| Org-wide Claude Code: block reading `.env` and secrets, non-overridable | yes | ✅ yes |
+| Cost and latency for 20k conversations a day with a 10k-token policy doc | yes | ✅ yes |
+| TypeScript: stream a response with `@anthropic-ai/sdk` | no | ✅ no |
+| AWS VPC endpoint vs NAT gateway | no | ✅ no |
+| Python `KeyError` when parsing JSON | no | ✅ no |
+
+All 8 triggered correctly: the five architecture prompts used the skill and the three near-misses didn't.
+
+The skill-assisted answers had these properties:
+- each cost $0.16–0.61 and took 12–46 s
+- they stayed within about 350–1,050 words
+- none cited the skill's files
+- the design and decision sessions worked from `SKILL.md` alone
+- the critique and governance sessions loaded reference files
+- the cost session also used the `claude-api` skill to check current pricing
+
 ## Caveats
 
 - Model names, prices, feature availability, cloud-provider model coverage, FedRAMP scopes and BAA-eligible features change often. The references mark these values as snapshots to verify against [current Anthropic documentation](https://docs.anthropic.com).
