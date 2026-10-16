@@ -24,7 +24,14 @@ It is built for the decisions that sit *above* the code: what Claude should own 
 
 ## Install
 
-**Claude Code (personal):**
+**Claude Code (personal, recommended):** clone the repo anywhere and symlink it into your user skills directory, so `git pull` keeps it up to date:
+```bash
+git clone https://github.com/bowen31337/claude-solution-architect ~/projects/claude-solution-architect
+cd ~/projects/claude-solution-architect && ./install.sh   # links ~/.claude/skills/claude-solution-architect -> this repo
+```
+To uninstall, remove the link with `rm ~/.claude/skills/claude-solution-architect`. The clone is left untouched.
+
+**Claude Code (personal, plain copy):**
 ```bash
 git clone https://github.com/bowen31337/claude-solution-architect ~/.claude/skills/claude-solution-architect
 ```
@@ -50,6 +57,7 @@ The skill triggers automatically when you ask Claude to design or review a Claud
 
 ```
 claude-solution-architect/
+├── install.sh                       # symlinks the repo into ~/.claude/skills
 ├── SKILL.md                         # modes, the 9-step design sequence, core principles, output templates
 ├── references/                      # loaded on demand
 │   ├── design-workflow.md           # intake questions, step-by-step procedure, sequencing rules, checklist
