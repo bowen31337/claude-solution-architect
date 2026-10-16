@@ -14,7 +14,7 @@ Read this when a scenario involves access control, credentials, Claude Code poli
 9. Responsible AI: fairness, transparency, ethics review
 10. Risk classification, threat modeling, incident handling
 11. Sequencing rules
-12. Recurring distractor patterns
+12. Tempting wrong choices
 13. Where the rules pull against each other
 
 ---
@@ -304,7 +304,7 @@ Justify delegation with **reversibility, stakes, accountability**. Also weigh ri
 
 ---
 
-## 12. Recurring distractor patterns
+## 12. Tempting wrong choices
 - **Prompt as boundary**: "add a system-prompt instruction / rely on refusal / put it in the Skill" for authZ, audit, or compliance.
 - **Too late**: post-generation filtering or render-time RBAC; post-hoc audit in place of a pre-action gate; escalate-after-complaint.
 - **Right control, wrong risk**: allow-list → "prevents injection"; evals → "prevents exfiltration"; citations → "stops injection"; vault → "fixes shared identity".

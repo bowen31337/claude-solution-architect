@@ -10,7 +10,7 @@ It is built for the decisions that sit *above* the code: what Claude should own 
 |---|---|---|
 | **Design** | A business brief ("we want Claude to…") | A sequenced design: framing, Claude/system/human decomposition, pattern, reference architecture, per-step model tier and cost/latency estimate, prompting layer, entry point → interface → delivery route, governance, eval plan, rollout, and a Mermaid diagram |
 | **Critique** | An architecture doc, diagram or proposal | Severity-ranked findings (principle, evidence, failure scenario, fix) — including what's *missing* — plus the sound parts you shouldn't change |
-| **Scenario reasoning** | A multiple-choice, yes/no or ordering question | Option-by-option analysis, the binding signal in the question, and the deciding principle — useful for Claude Certified Architect exam study |
+| **Scenario reasoning** | A multiple-choice, yes/no or ordering question | Option-by-option analysis, the binding signal in the question, and the deciding principle |
 
 ### Principles it applies
 
@@ -70,7 +70,7 @@ claude-solution-architect/
 │   ├── claude-code-enablement.md    # team rollout, CLAUDE.md, hooks, permission modes, CI, MCP ops, productivity metrics
 │   ├── evaluation-testing.md        # eval design, regression gates, experiments, diagnosis, optimization order
 │   ├── lifecycle-stakeholders.md    # success criteria, SLAs, value pillars, stakeholder comms, ADRs, rollout
-│   ├── anti-patterns.md             # named failure patterns, quick-scan checklist, common distractor shapes
+│   ├── anti-patterns.md             # named failure patterns, quick-scan checklist, tempting wrong choices
 │   └── glossary.md
 └── evals/evals.json                 # test prompts and assertions used to evaluate the skill
 ```
@@ -80,7 +80,7 @@ claude-solution-architect/
 The skill was developed with Anthropic's `skill-creator` eval loop. Each test prompt runs with and without the skill, and the outputs are graded against assertions. The suite covers:
 - full designs: field service, insurance claims, healthcare prior authorization
 - critiques: an over-provisioned support bot, a fan-out contract audit, a telco RAG/agent design, and a mostly-sound invoice pipeline that tests whether the skill over-flags correct components
-- scenario questions with distractors where the reasoning is right but the answer is wrong
+- decision questions with tempting options that are right for the wrong reason
 
 Assertions check substance, for example:
 - live state comes from tool calls
@@ -94,7 +94,7 @@ They also check answer quality: proportionate length, no invented statistics. Se
 
 - Model names, prices, feature availability, cloud-provider model coverage, FedRAMP scopes and BAA-eligible features change often. The references mark these values as snapshots to verify against [current Anthropic documentation](https://docs.anthropic.com).
 - Numbers in the references, such as cost multiples and accuracy deltas, illustrate failure modes. They are not benchmarks.
-- This is an independent community project. It is not affiliated with, endorsed by, or an official resource of Anthropic, and it contains no official certification exam content.
+- This is an independent community project. It is not affiliated with, endorsed by, or an official resource of Anthropic.
 
 ## License
 

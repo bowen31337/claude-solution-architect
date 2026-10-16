@@ -127,7 +127,7 @@ Run the final design against `anti-patterns.md`. In critique mode, this sweep *i
 
 ## Sequencing rules ("what must come BEFORE X")
 
-Order questions recur in design reviews and scenario-style questions. In each chain below, foundational steps come before the steps that depend on them. The distractor is the later step, presented as if it came first.
+Order questions recur in design reviews and scenario-style questions. In each chain below, foundational steps come before the steps that depend on them. The tempting wrong choice is the later step, presented as if it came first.
 
 - Goals, constraints, success criteria **before** stakeholder validation, design, or build.
 - Hypothesis, metric and minimum detectable effect **before** running an experiment.
@@ -177,4 +177,4 @@ Scale the deliverable to the question — omit sections that don't bear on a dec
 | Model/context | Sonnet, progressive; extended thinking per clause type only where evals justify it | Cost — Opus-everywhere is the "bill-arrived" failure |
 | HITL | Associate signs off on every output; low-confidence clauses flagged | Stakes and accountability sit with the lawyer |
 
-Common distractors: Claude.ai + Project fails on one row (entry point: privilege), and playbook-in-prompt fails on one row (split: knowledge staleness). Open agent + Opus fails on two rows: pattern (flexibility that would never be used) and model (cost).
+The tempting alternatives: Claude.ai + Project fails on one row (entry point: privilege), and playbook-in-prompt fails on one row (split: knowledge staleness). Open agent + Opus fails on two rows: pattern (flexibility that would never be used) and model (cost).

@@ -11,7 +11,7 @@ Use this file when a scenario involves building or sequencing evals, choosing a 
 6. Production: continuity, monitoring, drift
 7. Diagnosing regressions
 8. Optimization sequencing (cost and latency)
-9. Recurring distractor patterns
+9. Tempting wrong choices
 10. Where the rules pull against each other
 
 ---
@@ -174,7 +174,7 @@ Evidence first, then change exactly one thing. Order:
 
 **Caching can cost more** — Low call volume or a small fixed prefix may never amortize cache writes; a cache with dynamic content before the breakpoint never hits. Measure hit rate.
 
-## 9. Recurring distractor patterns
+## 9. Tempting wrong choices
 
 - Wrong test type for the objective: regression offered for attack resilience; adversarial offered for prompt-template regressions; smoke tests as quality evidence.
 - Evals as prevention: "add a regression eval" proposed for a live hallucination/injection problem that needs runtime controls.
@@ -188,7 +188,7 @@ Evidence first, then change exactly one thing. Order:
 
 ## 10. Where the rules pull against each other
 
-- **Partial routing as salvage vs "unanalysed hybrid" as distractor.** One rule says routing failing doc types to Sonnet and the rest to Haiku is a sound salvage; another says "hybrid routing" is wrong when proposed without analysis (e.g. as a way around an SLA gate). Reconcile: routing is right only when per-slice eval data shows which slices need the heavier path.
+- **Partial routing as salvage vs "unanalysed hybrid" as a wrong choice.** One rule says routing failing doc types to Sonnet and the rest to Haiku is a sound salvage; another says "hybrid routing" is wrong when proposed without analysis (e.g. as a way around an SLA gate). Reconcile: routing is right only when per-slice eval data shows which slices need the heavier path.
 - **Default starting tier.** One default says start with Sonnet and move deliberately; for high-volume, latency-sensitive closed-set classification (e.g. a moderation classifier), start with Haiku and escalate hard cases on eval evidence. Reconcile: Sonnet is the no-evidence default; a clearly light, high-volume workload profile justifies shortlisting Haiku first, still eval-gated.
 - **Order of cost levers.** One framing leads with per-step model downgrades (the Opus-everywhere fix); another says apply information-preserving levers (caching) before model or input changes. Reconcile: both require evals for any capability change; when "accuracy must not change," apply caching first.
 - **Scope of eval coverage.** One framing treats evals mainly as a pre-release and model-swap gate; a broader one adds production continuity, A/B design, monitoring specification and adversarial/fairness slices. Not contradictory; use the broader scope for any system going to production.

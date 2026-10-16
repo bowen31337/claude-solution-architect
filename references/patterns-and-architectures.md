@@ -16,7 +16,7 @@ Patterns give the **shape** of Claude's involvement. Reference architectures giv
 11. RAG chunking and indexing
 12. Decision rules
 13. Sequencing
-14. Recurring distractor patterns
+14. Tempting wrong choices
 15. Where the rules pull against each other
 
 ---
@@ -245,7 +245,7 @@ The most common miss is the index: choosing dense-only or sparse-only when the q
 7. In multi-agent work, validate each result at the subagent boundary, then reconcile coverage at synthesis, then gate before irreversible actions.
 8. For RAG, chunking per doc type, then index per query mix, then a labeled retrieval eval **before** tuning top-k; re-run that eval as the corpus grows.
 
-## 14. Recurring distractor patterns
+## 14. Tempting wrong choices
 - An agent chosen for "flexibility" when the paths are enumerable.
 - A router layered on a sprawling agent instead of decomposing by domain.
 - Multi-agent stacks for routine single-call lookups.

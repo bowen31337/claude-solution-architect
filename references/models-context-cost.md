@@ -13,7 +13,7 @@ How to pick a model tier, size and shape the context, decide on extended thinkin
 8. Cost and latency calculator, plus estimation recipe
 9. Cost and latency optimisation rules
 10. Sequencing
-11. Recurring distractors
+11. Tempting wrong choices
 12. Where the rules pull against each other
 
 ---
@@ -241,7 +241,7 @@ Reading the table: thinking adds about 1.5 s on every tier, which makes it the s
 
 ---
 
-## 11. Recurring distractors
+## 11. Tempting wrong choices
 
 - "Use the most capable (or newest) model" with no eval. That is an implicit choice of the most expensive option.
 - Extended thinking or chain-of-thought on classification or routing with no measured gap, which costs latency and tokens on every request.

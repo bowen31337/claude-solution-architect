@@ -15,7 +15,7 @@ Decomposition is the move that comes before architecture. Split the work into th
 8. Deterministic drift (Watch Out)
 9. Decision rules: what belongs in code/infrastructure vs the model
 10. Sequencing
-11. Recurring distractor patterns
+11. Tempting wrong choices
 12. Where the rules pull against each other
 
 ---
@@ -203,7 +203,7 @@ Cost, complexity, risk: you pay model prices for lookups that a query does for a
 4. Authenticate and authorize **before** retrieval and prompt construction, never after generation.
 5. Map AI-vs-human boundaries **before** a Claude Code pilot.
 
-## 11. Recurring distractor patterns
+## 11. Tempting wrong choices
 - "One step is simpler": a deterministic rule or threshold moved into the prompt.
 - "It's published policy prose, so it's a reasoning task": qualification and coverage decisions sent to Claude.
 - "It's simple arithmetic": computation sent to Claude.

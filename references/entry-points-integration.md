@@ -11,7 +11,7 @@ Use this file when the question is "where and how does Claude get reached?": whi
 6. Naming the deciding tradeoff, with generalized worked patterns
 7. Integration decision rules (MCP, Skill, direct API, agent handoff, auth, Tool Search)
 8. Sequencing rules
-9. Recurring distractor patterns
+9. Tempting wrong choices
 10. Where the rules pull against each other
 
 ---
@@ -217,7 +217,7 @@ In an illustrative case, a regional bank's "operations assistant" for branch sta
 5. **Authenticate/authorize before retrieval**, before prompt construction, before generation.
 6. Choose the integration mechanism by **portability first, then statefulness/latency**; add MCP only once a second client exists.
 
-## 9. Recurring distractor patterns
+## 9. Tempting wrong choices
 
 - **"It's all Claude"** — collapsing layers; Claude Code put in front of non-engineers.
 - **Familiarity-driven tooling** — MCP or Claude Code carried over from the last project with no second client or no engineering audience.

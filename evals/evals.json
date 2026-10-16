@@ -22,7 +22,7 @@
         "Splits warranty handling: Claude may draft/recommend, but the approval decision over $1,500 sits with a human and the threshold check runs in code",
         "Opens with a short decision summary before the detailed sections",
         "Keeps slow or non-urgent work (e.g. handover summarization) off the 2-second path, or explicitly budgets latency per request type",
-        "Speaks in its own voice: does not cite internal skill files/sections (e.g. 'anti-patterns.md', 'references/', '§2.7') or say 'the course'/'the exam' as a source",
+        "Speaks in its own voice: does not cite internal skill files/sections (e.g. 'anti-patterns.md', 'references/', '§2.7') or name where a rule came from",
         "Does not present illustrative teaching figures (e.g. '41 of 14,000 claims', 'bill 7x', '-71%') as real incidents or statistics"
       ]
     },
@@ -43,7 +43,7 @@
         "Proposes a phased rollout (e.g. shadow mode / pilot) before automation",
         "Addresses amounts expressed loosely in prose (e.g. 'around £5k', missing or conflicting amounts): validated and routed to an exception/human path rather than the model deciding the threshold",
         "Gates small-claim payouts by risk signals (fraud indicators, coverage, duplicates), not by amount alone",
-        "Speaks in its own voice: does not cite internal skill files/sections (e.g. 'anti-patterns.md', 'references/', '§2.7') or say 'the course'/'the exam' as a source",
+        "Speaks in its own voice: does not cite internal skill files/sections (e.g. 'anti-patterns.md', 'references/', '§2.7') or name where a rule came from",
         "Does not present illustrative teaching figures (e.g. '41 of 14,000 claims', 'bill 7x', '-71%') as real incidents or statistics"
       ]
     },
@@ -63,7 +63,7 @@
         "Proposes an evaluation of factual/diagnosis accuracy with a pre-set threshold",
         "Includes audit logging and least-privilege access controls",
         "Keeps PHI out of channels/features not covered by the BAA (e.g. feedback/telemetry, non-eligible features), or says to verify feature eligibility",
-        "Speaks in its own voice: does not cite internal skill files/sections (e.g. 'anti-patterns.md', 'references/', '§2.7') or say 'the course'/'the exam' as a source",
+        "Speaks in its own voice: does not cite internal skill files/sections (e.g. 'anti-patterns.md', 'references/', '§2.7') or name where a rule came from",
         "Does not present illustrative teaching figures (e.g. '41 of 14,000 claims', 'bill 7x', '-71%') as real incidents or statistics"
       ]
     },
@@ -84,7 +84,7 @@
         "Notes the missing human escalation path or the absence of an eval set/rollback criteria",
         "Acknowledges at least one sound element (e.g. RAG over product catalogue, routing shape)",
         "Requires a stratified eval set with a pre-set threshold/rollback criterion before swapping models down",
-        "Speaks in its own voice: does not cite internal skill files/sections (e.g. 'anti-patterns.md', 'references/', '§2.7') or say 'the course'/'the exam' as a source",
+        "Speaks in its own voice: does not cite internal skill files/sections (e.g. 'anti-patterns.md', 'references/', '§2.7') or name where a rule came from",
         "Does not present illustrative teaching figures (e.g. '41 of 14,000 claims', 'bill 7x', '-71%') as real incidents or statistics"
       ]
     },
@@ -103,7 +103,7 @@
         "Flags the compliance-checker subagent as a weak guarantee / recommends deterministic checks or human review",
         "Proposes a concrete alternative architecture",
         "Notes that the compliance-checker only re-checks FLAGs, so PASS results (the ones that trigger irreversible archive/certificate actions) are never double-checked",
-        "Speaks in its own voice: does not cite internal skill files/sections (e.g. 'anti-patterns.md', 'references/', '§2.7') or say 'the course'/'the exam' as a source",
+        "Speaks in its own voice: does not cite internal skill files/sections (e.g. 'anti-patterns.md', 'references/', '§2.7') or name where a rule came from",
         "Does not present illustrative teaching figures (e.g. '41 of 14,000 claims', 'bill 7x', '-71%') as real incidents or statistics"
       ]
     },
@@ -121,14 +121,14 @@
         "Affirms RAG over manuals/T&Cs (and/or classifier) as appropriate",
         "Notes the classifier needs a fallback for unclear/other intents (e.g. human handoff), or recommends per-route evals",
         "Stays proportionate to a 'quick sanity check' (roughly under 900 words) and leads with the verdict",
-        "Speaks in its own voice: does not cite internal skill files/sections (e.g. 'anti-patterns.md', 'references/', '§2.7') or say 'the course'/'the exam' as a source",
+        "Speaks in its own voice: does not cite internal skill files/sections (e.g. 'anti-patterns.md', 'references/', '§2.7') or name where a rule came from",
         "Does not present illustrative teaching figures (e.g. '41 of 14,000 claims', 'bill 7x', '-71%') as real incidents or statistics"
       ]
     },
     {
       "id": 7,
       "name": "scenario-settings-precedence-yesno",
-      "prompt": "Studying for the architect exam - answer Yes/No for each, one-line reason each:\n\nOur platform team set a managed policy that denies Bash(rm -rf:*) for every engineer using Claude Code. One engineer added \"allow\": [\"Bash(rm -rf:*)\"] to their .claude/settings.local.json so they can clean build folders.\n\n1. The managed deny still blocks the command for that engineer.\n2. Because local settings take precedence over project settings, the engineer's allow overrides the managed deny.\n3. If the platform team had instead put the deny rule in the repo's shared .claude/settings.json, engineers could not get around it.\n4. A line in CLAUDE.md saying \"never run rm -rf\" is an enforcement control comparable to the deny rule.\n5. Command-line arguments take precedence over project and user settings, but not over managed settings.",
+      "prompt": "Quick check on our Claude Code setup - answer Yes/No for each, one-line reason each:\n\nOur platform team set a managed policy that denies Bash(rm -rf:*) for every engineer using Claude Code. One engineer added \"allow\": [\"Bash(rm -rf:*)\"] to their .claude/settings.local.json so they can clean build folders.\n\n1. The managed deny still blocks the command for that engineer.\n2. Because local settings take precedence over project settings, the engineer's allow overrides the managed deny.\n3. If the platform team had instead put the deny rule in the repo's shared .claude/settings.json, engineers could not get around it.\n4. A line in CLAUDE.md saying \"never run rm -rf\" is an enforcement control comparable to the deny rule.\n5. Command-line arguments take precedence over project and user settings, but not over managed settings.",
       "expected_output": "Yes, No, No, No, Yes with correct reasons: managed is highest precedence and deny beats allow; local>project but managed above all; project scope editable by repo writers / overridable locally, not tamper-proof; CLAUDE.md is guidance not enforcement; precedence managed > CLI > local > project > user.",
       "files": [],
       "assertions": [
@@ -139,7 +139,7 @@
         "Claim 5 answered Yes",
         "Reason for claim 2 says deny beats allow and/or managed settings sit above local settings",
         "Reason for claim 3 says anyone with repo write access can edit or remove the project rule (and does NOT claim a local allow overrides a project deny)",
-        "Speaks in its own voice: does not cite internal skill files/sections (e.g. 'anti-patterns.md', 'references/', '§2.7') or say 'the course'/'the exam' as a source",
+        "Speaks in its own voice: does not cite internal skill files/sections (e.g. 'anti-patterns.md', 'references/', '§2.7') or name where a rule came from",
         "Does not present illustrative teaching figures (e.g. '41 of 14,000 claims', 'bill 7x', '-71%') as real incidents or statistics"
       ]
     },
@@ -155,7 +155,7 @@
         "Rejects C and E because model tier or instructions cannot make a stale index correct",
         "Names the principle that live state comes from a tool call to the system of record while retrieval is for stable knowledge",
         "Says what the assistant should do if the rates tool fails or times out (e.g. decline to quote, never fall back to the index)",
-        "Speaks in its own voice: does not cite internal skill files/sections (e.g. 'anti-patterns.md', 'references/', '§2.7') or say 'the course'/'the exam' as a source",
+        "Speaks in its own voice: does not cite internal skill files/sections (e.g. 'anti-patterns.md', 'references/', '§2.7') or name where a rule came from",
         "Does not present illustrative teaching figures (e.g. '41 of 14,000 claims', 'bill 7x', '-71%') as real incidents or statistics"
       ]
     },
@@ -172,7 +172,7 @@
         "Does not recommend an agent, multi-agent, or Opus for this pipeline",
         "Explicitly affirms at least three sound components (e.g. deterministic checks in code, human-approved payment runs, cache layout, Bedrock route, eval-backed tiering)",
         "Stays proportionate to the 'keep it short' request (roughly under 700 words)",
-        "Speaks in its own voice: does not cite internal skill files/sections (e.g. 'anti-patterns.md', 'references/', '§2.7') or say 'the course'/'the exam' as a source",
+        "Speaks in its own voice: does not cite internal skill files/sections (e.g. 'anti-patterns.md', 'references/', '§2.7') or name where a rule came from",
         "Does not present illustrative teaching figures (e.g. '41 of 14,000 claims', 'bill 7x', '-71%') as real incidents or statistics"
       ]
     }

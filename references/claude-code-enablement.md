@@ -14,7 +14,7 @@ Covers developer productivity and operational enablement with Claude Code: custo
 9. Coding-agent architecture and PR workflow
 10. Measuring developer productivity
 11. Sequencing rules
-12. Recurring distractor patterns
+12. Tempting wrong choices
 13. Where the rules pull against each other
 
 ---
@@ -195,7 +195,7 @@ Use the business-value pillars and keep them distinct:
 - Skill publication: domain team authors → central review (security, tool permissions, duplication, versioning, test evidence) → publish versioned → owner maintains.
 - Model or prompt change for a coding agent: re-run per-language regression evals before rollout.
 
-## 12. Recurring distractor patterns
+## 12. Tempting wrong choices
 
 - Putting a guarantee in a shaping layer (CLAUDE.md line, Skill, subagent) instead of a hook, permission rule or sandbox.
 - bypassPermissions for CI "because no one can approve" when dontAsk + allow-list fits.

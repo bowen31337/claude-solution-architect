@@ -14,7 +14,7 @@ At enterprise scale a prompt is "not a sentence you type, but an asset you desig
 9. Skills as an integration mechanism
 10. Choosing a mechanism: Skill vs MCP vs retrieval vs CLAUDE.md
 11. Sequencing
-12. Recurring distractors
+12. Tempting wrong choices
 13. Where the rules pull against each other
 
 ---
@@ -222,7 +222,7 @@ Feature names and availability are time-sensitive, so verify against current Ant
 
 ---
 
-## 12. Recurring distractors
+## 12. Tempting wrong choices
 
 - Stating a high-consequence rule in the role text, or a single hardened system prompt, as the guardrail.
 - Treating a prompt or Skill instruction as a security boundary for authorisation, audit, or data access.

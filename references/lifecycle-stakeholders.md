@@ -12,7 +12,7 @@ Use this file when a scenario involves discovery, requirements, success criteria
 7. Pilots, rollouts, change management
 8. Iterate in place or re-enter design
 9. Sequencing cheat sheet ("what comes before X")
-10. Recurring distractor patterns
+10. Tempting wrong choices
 11. Where the rules pull against each other
 
 ---
@@ -168,7 +168,7 @@ The decision and rationale stay the same; depth and evidence change with the aud
 | Assessing threat likelihood/impact | Asset inventory + sensitivity; threat actors/vectors | Mitigations, residual risk, documentation |
 | Weighing cost/ops savings | Non-negotiable constraint check (residency, boundary, SLA) | Multi-pillar comparison |
 
-## 10. Recurring distractor patterns
+## 10. Tempting wrong choices
 
 - Prototype or assumed scope in place of discovery; picking a model before the workload is known.
 - Qualitative SLA ("fast and reliable") or average latency instead of percentile + window + breach consequence.

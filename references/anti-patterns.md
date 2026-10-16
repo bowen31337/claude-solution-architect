@@ -1,15 +1,15 @@
 # Anti-patterns catalogue
 
 Use this file in two ways:
-- **Critique mode:** run the quick-scan checklist against the design, then cite the matching card for each hit.
-- **Scenario-question mode:** in architect-style multiple-choice questions, most wrong options are instances of a distractor family in Part 3. Naming the family is usually enough to eliminate the option.
+- **Critique mode:** run the quick-scan checklist against the design, then use the matching card's failure scenario and fix for each hit (in your own words; don't cite the card).
+- **Decision-question mode:** when comparing candidate options (multiple-choice, yes/no, ordering), most wrong options are instances of one of the families in Part 3. Naming the family is usually enough to eliminate the option.
 
 Many of these failures are *silent*: the system keeps producing fluent, confident output, with normal latency and no errors. Nothing signals a problem until an audit, a bill, or an angry user turns it up. That is why a critique has to check for what's **missing** as well as what is drawn.
 
 ## Contents
 1. Quick-scan checklist (critique mode)
 2. Named anti-patterns, one card each
-3. Distractor families (scenario questions)
+3. Families of tempting wrong choices
 
 ---
 
@@ -169,7 +169,7 @@ Each card gives: **Symptom**, **Root cause**, **Fix** and **Tell-tale signals** 
 
 ---
 
-## 3. Distractor families (scenario questions)
+## 3. Families of tempting wrong choices
 
 In scenario-style questions, wrong options usually take one of these shapes. Spot the family, then confirm the right option avoids it.
 
