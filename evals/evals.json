@@ -1,0 +1,180 @@
+{
+  "skill_name": "claude-solution-architect",
+  "evals": [
+    {
+      "id": 1,
+      "name": "design-field-service-assistant",
+      "prompt": "We're an HVAC field-service company with ~300 technicians, everything runs on Azure (we have a Microsoft EA, Entra ID for identity). We want a Claude-powered assistant on the techs' tablets that can: answer questions from our 2,000 equipment service manuals (lots of model numbers and error codes in the questions), tell them whether the replacement part is in stock at the nearest depot, summarize the job notes into a handover for the next shift, work out billable hours across the job tickets for the day, and approve warranty replacements over $1,500. About 15k requests a day, answers need to come back in under 2 seconds. Can you design this for us?",
+      "expected_output": "Full design doc: decomposition assigning stock lookup/warranty/billing calc to systems and >$1,500 approval to a human; workflow with routing rather than agent; RAG over manuals with hybrid (sparse+dense) indexing and structure-aware chunking; live tool call for stock; Sonnet default with Haiku for routing only if evals confirm; progressive context; cost/latency estimate; Foundry route justified by Azure EA; custom app on SDK (not Claude Code); HITL + escalation path; eval plan; mermaid diagram; deciding tradeoff lines.",
+      "files": [],
+      "assertions": [
+        "Assigns part-stock lookup to a live tool/API call against the inventory system, not retrieval",
+        "Assigns billable-hours calculation to deterministic code/system, not the model",
+        "Assigns warranty approval over $1,500 to a human (Claude may draft/recommend only)",
+        "Recommends a workflow/routing pattern rather than an autonomous agent as the core pattern",
+        "Recommends hybrid (sparse/keyword + dense) retrieval for manuals because of model numbers / error codes",
+        "Recommends Microsoft Foundry (Azure) as delivery route, justified by the Azure EA / Entra ID",
+        "Does not recommend Claude Code as the technicians' entry point",
+        "Gives an explicit per-step model tier choice and a cost or latency estimate against the 2s budget",
+        "Includes an evaluation plan with acceptance/rollback criteria",
+        "Names an explicit deciding tradeoff for major decisions",
+        "Says what happens when the manuals don't contain the answer (abstain / escalate / say so) rather than letting the model guess",
+        "Splits warranty handling: Claude may draft/recommend, but the approval decision over $1,500 sits with a human and the threshold check runs in code",
+        "Opens with a short decision summary before the detailed sections",
+        "Keeps slow or non-urgent work (e.g. handover summarization) off the 2-second path, or explicitly budgets latency per request type",
+        "Speaks in its own voice: does not cite internal skill files/sections (e.g. 'anti-patterns.md', 'references/', '§2.7') or say 'the course'/'the exam' as a source",
+        "Does not present illustrative teaching figures (e.g. '41 of 14,000 claims', 'bill 7x', '-71%') as real incidents or statistics"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "design-insurance-claims-doc-pipeline",
+      "prompt": "Mid-size insurer here. Claims come in as scanned PDFs + photos + free-text emails, ~4,000/day. Today adjusters manually key in policy number, incident date, claimed amount, and incident description, then a SQL rule routes anything over £5,000 to a senior adjuster. Leadership wants 'an AI agent that handles claims end to end' including paying out small claims automatically. We're on AWS. What should we actually build?",
+      "expected_output": "Push back on 'agent end to end': document processing pipeline (OCR -> schema extraction -> validation -> exception routing) with evaluator-optimizer; keep the £5,000 threshold in SQL/rule engine (deterministic drift warning); payouts not autonomous—human or deterministic system with gates; low-confidence exception path; Bedrock route due to AWS; Sonnet/Haiku per step with eval gate; success criteria & phased rollout; deciding tradeoffs.",
+      "files": [],
+      "assertions": [
+        "Pushes back on an end-to-end autonomous agent and recommends a structured pipeline/workflow",
+        "Keeps the £5,000 routing threshold in the deterministic SQL/rule system rather than in the model",
+        "Does not allow autonomous model-driven payouts; payouts gated by deterministic rules and/or human approval",
+        "Includes an exception path for low-confidence/failed extractions to human review",
+        "Includes schema validation or an evaluator step on extracted fields",
+        "Recommends AWS Bedrock as the delivery route given the AWS footprint",
+        "Includes measurable success criteria and an eval set before rollout",
+        "Proposes a phased rollout (e.g. shadow mode / pilot) before automation",
+        "Addresses amounts expressed loosely in prose (e.g. 'around £5k', missing or conflicting amounts): validated and routed to an exception/human path rather than the model deciding the threshold",
+        "Gates small-claim payouts by risk signals (fraud indicators, coverage, duplicates), not by amount alone",
+        "Speaks in its own voice: does not cite internal skill files/sections (e.g. 'anti-patterns.md', 'references/', '§2.7') or say 'the course'/'the exam' as a source",
+        "Does not present illustrative teaching figures (e.g. '41 of 14,000 claims', 'bill 7x', '-71%') as real incidents or statistics"
+      ]
+    },
+    {
+      "id": 3,
+      "name": "design-healthcare-prior-auth",
+      "prompt": "I'm the solutions architect for a hospital network. Clinicians want help drafting prior-authorization letters to insurers from the patient chart (PHI obviously). We already have a signed BAA with AWS that covers Bedrock for our account. Another vendor is pitching 'just use Claude.ai Enterprise, it has a HIPAA option'. Our compliance officer also wants proof the letters don't hallucinate diagnoses. Recommend the entry point, route, and the safeguards, and tell me the deciding tradeoff.",
+      "expected_output": "Recommend custom app on API/SDK via Bedrock under the existing BAA; deciding tradeoff = governance/control (existing BAA covers this configuration), NOT residency; explain why Claude.ai Enterprise adds new procurement/BAA dependency; note beta features may be excluded from BAA; grounding: pull facts from chart via tools/EHR system of record, citations to source, clinician sign-off before sending; eval set for factual accuracy with pre-set threshold, subgroup reporting; audit logging, least privilege, ZDR consideration.",
+      "files": [],
+      "assertions": [
+        "Recommends Bedrock under the existing BAA (custom app via API/SDK) rather than Claude.ai Enterprise",
+        "States the deciding tradeoff as governance/compliance coverage of the existing BAA, not data residency/region",
+        "Explains that the Claude.ai Enterprise path adds a new BAA/procurement dependency",
+        "Notes that BAA coverage is configuration/feature specific (e.g. beta features may be excluded)",
+        "Grounds letters in chart data from the system of record with citations/traceability to source",
+        "Requires clinician review/sign-off before a letter is sent",
+        "Proposes an evaluation of factual/diagnosis accuracy with a pre-set threshold",
+        "Includes audit logging and least-privilege access controls",
+        "Keeps PHI out of channels/features not covered by the BAA (e.g. feedback/telemetry, non-eligible features), or says to verify feature eligibility",
+        "Speaks in its own voice: does not cite internal skill files/sections (e.g. 'anti-patterns.md', 'references/', '§2.7') or say 'the course'/'the exam' as a source",
+        "Does not present illustrative teaching figures (e.g. '41 of 14,000 claims', 'bill 7x', '-71%') as real incidents or statistics"
+      ]
+    },
+    {
+      "id": 4,
+      "name": "critique-opus-everywhere-support-bot",
+      "prompt": "Can you review our architecture doc before the steering committee on Friday?\n\n---\nPROJECT: ShopAssist v1 (e-commerce support chat, 40k conversations/day, target p50 latency 900ms)\n\n1. Every message goes to claude-opus (we want the best quality) with extended thinking enabled so it reasons carefully.\n2. Step 1: Opus classifies intent (billing / shipping / returns / product question / other).\n3. Step 2: For shipping questions we retrieve from our 'orders' vector index, which is rebuilt nightly from the orders DB, and Opus answers 'where is my order' questions from the top-3 chunks.\n4. Step 3: Product questions use RAG over the product catalogue docs.\n5. The full conversation history plus the full returns policy (12k tokens) is sent on every turn so the model never forgets anything.\n6. We'll look at the bill monthly and optimise later if needed.\n7. Success metric: thumbs-up rate in the chat widget.\n---",
+      "expected_output": "Ranked findings: Opus everywhere + extended thinking on classifier (cost/latency vs 900ms target; tier per step with evals: Haiku classifier, Sonnet); retrieval over nightly orders index for live state -> tool call to order API; monolithic growing context -> progressive + cached stable prefix (policy first); cost reviewed monthly not modelled in design; no eval set / rollback criteria; single proxy metric (thumbs-up) insufficient; missing human escalation path; notes what is right (RAG for product docs, routing shape).",
+      "files": [],
+      "assertions": [
+        "Flags Opus on every step and recommends per-step tiering (e.g. Haiku/Sonnet for classification) backed by evals",
+        "Flags extended thinking on the intent classifier as unnecessary cost/latency",
+        "Flags the nightly orders vector index as retrieval over live state and recommends a tool/API call to the order system",
+        "Flags sending full history + 12k policy every turn and recommends progressive context and/or prompt caching with static prefix first",
+        "Flags monthly bill review and recommends modelling cost/latency during design",
+        "Flags thumbs-up rate as an insufficient single success metric",
+        "Flags the 900ms p50 latency target as at risk with the current design",
+        "Notes the missing human escalation path or the absence of an eval set/rollback criteria",
+        "Acknowledges at least one sound element (e.g. RAG over product catalogue, routing shape)",
+        "Requires a stratified eval set with a pre-set threshold/rollback criterion before swapping models down",
+        "Speaks in its own voice: does not cite internal skill files/sections (e.g. 'anti-patterns.md', 'references/', '§2.7') or say 'the course'/'the exam' as a source",
+        "Does not present illustrative teaching figures (e.g. '41 of 14,000 claims', 'bill 7x', '-71%') as real incidents or statistics"
+      ]
+    },
+    {
+      "id": 5,
+      "name": "critique-fanout-and-claude-code-misuse",
+      "prompt": "Our HR ops team (non-technical) wants to audit 120 supplier contracts against our new labour-standards policy. The proposal from our innovation team:\n\n- Install Claude Code on each HR analyst's laptop, with a CLAUDE.md explaining the policy.\n- Claude Code spins up one subagent per contract; each returns PASS/FLAG; the orchestrator writes a summary like '118 contracts reviewed, 7 flagged'.\n- Contracts that PASS are automatically moved to the 'compliant' archive folder and the supplier is emailed a compliance certificate.\n- We'll build MCP servers for the contract store and the email system.\n- A 'compliance-checker' subagent double-checks every flag.\n\nWhat do you think? Be blunt.",
+      "expected_output": "Findings: Claude Code for non-engineering users (entry point chosen before user named); fan-out with no coverage reconciliation (returned vs dispatched), no retry/gap flag; irreversible actions (archive + certificate email) with no human gate; MCP with a single client; compliance on a subagent (weakest deterministic guarantee) -> deterministic code; propose: internal web app or Claude.ai project depending on scale... parallelized workflow via API with coverage check, schema validation, human sign-off before certificates, trace IDs.",
+      "files": [],
+      "assertions": [
+        "Flags Claude Code as the wrong entry point for non-technical HR users",
+        "Flags the summary count not being reconciled against contracts dispatched (coverage check)",
+        "Flags missing retry/gap handling for failed or empty subagent results",
+        "Flags auto-archiving and emailing certificates as irreversible actions needing a human gate",
+        "Flags MCP servers as unjustified with a single client",
+        "Flags the compliance-checker subagent as a weak guarantee / recommends deterministic checks or human review",
+        "Proposes a concrete alternative architecture",
+        "Notes that the compliance-checker only re-checks FLAGs, so PASS results (the ones that trigger irreversible archive/certificate actions) are never double-checked",
+        "Speaks in its own voice: does not cite internal skill files/sections (e.g. 'anti-patterns.md', 'references/', '§2.7') or say 'the course'/'the exam' as a source",
+        "Does not present illustrative teaching figures (e.g. '41 of 14,000 claims', 'bill 7x', '-71%') as real incidents or statistics"
+      ]
+    },
+    {
+      "id": 6,
+      "name": "critique-rag-agent-refunds",
+      "prompt": "Quick sanity check on this diagram for our telco customer-care assistant:\n\n[User] -> [Claude intent classifier] -> one of:\n   (a) [RAG over 'Account Balances' index, refreshed every 15 minutes] -> [Claude answer]\n   (b) [RAG over device manuals + T&Cs] -> [Claude answer]\n   (c) [Claude agent loop with tools: issue_credit(amount), cancel_contract(), port_number_out()] -> [Claude answer]\n[All responses] -> [Response composer] -> [User]\n\nThe team says if balances look stale they'll just refresh the index every 5 minutes instead. Anything wrong?",
+      "expected_output": "Identify: retrieval for live account balance (category error; fix is tool call to billing system, not faster refresh — 'similarity is not truth'); unguarded high-consequence agent tools (credit, cancel, port-out irreversible) need human approval layer/deterministic limits, least privilege; missing escalation path to human agent; correctly call RAG over manuals/T&Cs and classifier+composer as sound; suggest per-route evals.",
+      "files": [],
+      "assertions": [
+        "Identifies RAG over account balances as retrieval over live state and recommends a direct tool call to the billing system",
+        "Explicitly rejects the faster-refresh fix as not solving the problem",
+        "Flags issue_credit/cancel_contract/port_number_out as high-consequence tools needing human approval or deterministic limits",
+        "Flags the missing escalation path to a human agent",
+        "Affirms RAG over manuals/T&Cs (and/or classifier) as appropriate",
+        "Notes the classifier needs a fallback for unclear/other intents (e.g. human handoff), or recommends per-route evals",
+        "Stays proportionate to a 'quick sanity check' (roughly under 900 words) and leads with the verdict",
+        "Speaks in its own voice: does not cite internal skill files/sections (e.g. 'anti-patterns.md', 'references/', '§2.7') or say 'the course'/'the exam' as a source",
+        "Does not present illustrative teaching figures (e.g. '41 of 14,000 claims', 'bill 7x', '-71%') as real incidents or statistics"
+      ]
+    },
+    {
+      "id": 7,
+      "name": "scenario-settings-precedence-yesno",
+      "prompt": "Studying for the architect exam - answer Yes/No for each, one-line reason each:\n\nOur platform team set a managed policy that denies Bash(rm -rf:*) for every engineer using Claude Code. One engineer added \"allow\": [\"Bash(rm -rf:*)\"] to their .claude/settings.local.json so they can clean build folders.\n\n1. The managed deny still blocks the command for that engineer.\n2. Because local settings take precedence over project settings, the engineer's allow overrides the managed deny.\n3. If the platform team had instead put the deny rule in the repo's shared .claude/settings.json, engineers could not get around it.\n4. A line in CLAUDE.md saying \"never run rm -rf\" is an enforcement control comparable to the deny rule.\n5. Command-line arguments take precedence over project and user settings, but not over managed settings.",
+      "expected_output": "Yes, No, No, No, Yes with correct reasons: managed is highest precedence and deny beats allow; local>project but managed above all; project scope editable by repo writers / overridable locally, not tamper-proof; CLAUDE.md is guidance not enforcement; precedence managed > CLI > local > project > user.",
+      "files": [],
+      "assertions": [
+        "Claim 1 answered Yes",
+        "Claim 2 answered No",
+        "Claim 3 answered No",
+        "Claim 4 answered No",
+        "Claim 5 answered Yes",
+        "Reason for claim 2 says deny beats allow and/or managed settings sit above local settings",
+        "Reason for claim 3 says anyone with repo write access can edit or remove the project rule (and does NOT claim a local allow overrides a project deny)",
+        "Speaks in its own voice: does not cite internal skill files/sections (e.g. 'anti-patterns.md', 'references/', '§2.7') or say 'the course'/'the exam' as a source",
+        "Does not present illustrative teaching figures (e.g. '41 of 14,000 claims', 'bill 7x', '-71%') as real incidents or statistics"
+      ]
+    },
+    {
+      "id": 8,
+      "name": "scenario-select-two-live-rates",
+      "prompt": "Select TWO, and explain each option briefly:\n\nA retail bank's assistant answers questions about current credit-card interest rates using a vector index of rate sheets that is rebuilt every night. After a mid-day rate change, customers were quoted the old rate for the rest of the day. Which TWO design changes together fix the problem?\n\nA. Rebuild the index every 15 minutes so a quoted rate is never more than 15 minutes stale.\nB. At answer time, fetch the current rate from the rates system of record via a tool call.\nC. Move the answer step to Opus so it reasons better about which retrieved rate sheet is newest.\nD. Keep retrieval for explanatory content (fee explanations, eligibility rules) and route current-rate questions to the tool path.\nE. Add a system-prompt instruction: \"Always use the most recent rate sheet.\"",
+      "expected_output": "B and D. Live state needs a tool call to the system of record; retrieval stays for stable knowledge with rate questions routed to the tool. A narrows but doesn't close the staleness window; C/E can't make a stale or conflicting index correct.",
+      "files": [],
+      "assertions": [
+        "Selects exactly B and D",
+        "Rejects A because a faster refresh still serves a snapshot / does not eliminate staleness",
+        "Rejects C and E because model tier or instructions cannot make a stale index correct",
+        "Names the principle that live state comes from a tool call to the system of record while retrieval is for stable knowledge",
+        "Says what the assistant should do if the rates tool fails or times out (e.g. decline to quote, never fall back to the index)",
+        "Speaks in its own voice: does not cite internal skill files/sections (e.g. 'anti-patterns.md', 'references/', '§2.7') or say 'the course'/'the exam' as a source",
+        "Does not present illustrative teaching figures (e.g. '41 of 14,000 claims', 'bill 7x', '-71%') as real incidents or statistics"
+      ]
+    },
+    {
+      "id": 9,
+      "name": "critique-mostly-sound-invoice-pipeline",
+      "prompt": "Could you review this before we start building? Keep it short - we think it's mostly fine.\n\nInvoiceFlow (accounts payable, ~9,000 supplier invoices/day, AWS shop)\n- Delivery via Amazon Bedrock under our existing AWS agreement.\n- Step 1: Claude Haiku classifies document type (invoice / credit note / statement / other). We ran a 600-document stratified eval: 98.7% vs Sonnet's 99.0%, within our pre-agreed 0.5-pt tolerance.\n- Step 2: Claude Sonnet extracts supplier, invoice number, line items, totals into a JSON schema; output is schema-validated.\n- Step 3: Python checks line items sum to the total, and matches PO number + amount against the ERP via API. Mismatches go to the AP exception queue for a human.\n- Step 4: Matched invoices within the 3-way-match tolerance are queued for the next payment run; a human AP lead approves each payment run.\n- The static extraction instructions and schema come first in the prompt and are cached; the invoice comes last.\n- Quality bar for the Sonnet extraction step: we'll set the acceptance threshold after we see the pilot results.\n- We'll measure success by invoices processed per day.",
+      "expected_output": "Short critique. Genuine issues: acceptance threshold set after seeing pilot data (must be pre-set); throughput-only success metric. Possibly: duplicate-invoice/fraud checks, 'other' document handling. Explicitly affirms the sound parts (eval-backed Haiku classifier, deterministic checks, human-approved payment runs, cache layout, Bedrock). Does not recommend Opus, agents, or replacing Haiku.",
+      "files": [],
+      "assertions": [
+        "Flags setting the acceptance threshold after seeing pilot results as a defect (threshold must be set before the data)",
+        "Flags 'invoices processed per day' as an insufficient success metric (needs accuracy / error / exception-rate measures)",
+        "Does not flag the eval-backed Haiku classifier as a defect or recommend replacing it",
+        "Does not recommend an agent, multi-agent, or Opus for this pipeline",
+        "Explicitly affirms at least three sound components (e.g. deterministic checks in code, human-approved payment runs, cache layout, Bedrock route, eval-backed tiering)",
+        "Stays proportionate to the 'keep it short' request (roughly under 700 words)",
+        "Speaks in its own voice: does not cite internal skill files/sections (e.g. 'anti-patterns.md', 'references/', '§2.7') or say 'the course'/'the exam' as a source",
+        "Does not present illustrative teaching figures (e.g. '41 of 14,000 claims', 'bill 7x', '-71%') as real incidents or statistics"
+      ]
+    }
+  ]
+}
